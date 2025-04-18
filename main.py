@@ -4,10 +4,10 @@ import logging
 import warnings
 
 from dotenv import load_dotenv
-from langgraph.workflow import run_workflow  # your workflow runner
+from langgraph.workflow import run_workflow  # workflow runner
 
 # -----------------------------------------------------------------------------
-# 1. Load .env file (for GROQ_API_KEY, PGVECTOR_CONNECTION_STRING, etc.)
+# 1. Load .env file (for GROQ_API_KEY, CONNECTION_STRING, etc.)
 # -----------------------------------------------------------------------------
 load_dotenv()
 
@@ -21,6 +21,7 @@ logging.getLogger("unstructured").setLevel(logging.ERROR)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
+
 # -----------------------------------------------------------------------------
 # 3. Entry point
 # -----------------------------------------------------------------------------
@@ -33,27 +34,25 @@ def main():
         required=True,
         help="Path to the SRS document (.docx or .pdf)."
     )
-    parser.add_argument(
-        "-o", "--output-dir",
-        default="output_projects",
-        help="Directory where generated projects (or zip files) will be stored."
-    )
     args = parser.parse_args()
 
+    output_dir = "output_projects"
     # Ensure the output directory exists
-    os.makedirs(args.output_dir, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
+
     # Pass it into the workflow via an environment variable or directly, as your nodes expect
-    os.environ["OUTPUT_DIR"] = args.output_dir if args.output_dir else "output_projects"
+    os.environ["OUTPUT_DIR"] = output_dir
 
     print(f"\n▶️  Starting workflow for SRS: {args.input}\n\n")
 
     try:
-        # This triggers your LangGraph pipeline:
+        # This triggers the LangGraph pipeline:
         # 1. Ingest & chunk the document
         # 2. Extract requirements
         # 3. Parse into Python objects
-        # 4. Scaffold project skeleton
-        # (and more as you add nodes)
+        # 4. Build default project skeleton
+        # 5. Setup DB connection in the project
+
         result_path = run_workflow(args.input)
 
         print("\n✅  Workflow completed successfully!")

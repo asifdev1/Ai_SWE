@@ -15,7 +15,6 @@ def extract_functional_requirements():
     # Load the vector store
     vector_store = get_vector_store()
 
-
     # 1. Wrap the vector store retriever in a retriever object
     retriever = vector_store.as_retriever(search_kwargs={"k": 5})
 

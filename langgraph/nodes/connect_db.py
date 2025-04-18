@@ -48,6 +48,9 @@ Do not include any extra text or comma or backticks, only valid Python code only
 
     # 3. Initialize Alembic in project root (if not already initialized)
     migrations_dir = Path(project_path) / "alembic"
+
+    return str(models_dir), str(migrations_dir)
+
     if not migrations_dir.exists():
         subprocess.run(
             [sys.executable, "-m" "alembic", "init", "alembic"],
