@@ -1,0 +1,17 @@
+# Core langchain community and other packages
+langchain
+langchain-community 
+langchain-huggingface 
+langchain_groq
+
+#vector db and embeddings
+pgvector
+psycopg2-binary
+sentence-transformers
+huggingface-hub
+
+# other utilities
+python-dotenv
+python-docx 
+unstructured 
+pypdf

@@ -1,0 +1,11 @@
+.env
+.venv
+venv
+__pycache__/
+.Python
+build/
+dist/
+
+pip-log.txt
+.vscode
+/output_projects
